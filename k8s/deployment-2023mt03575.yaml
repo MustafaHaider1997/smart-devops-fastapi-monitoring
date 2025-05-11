@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-2023mt03575
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fastapi-app
+  template:
+    metadata:
+      labels:
+        app: fastapi-app
+    spec:
+      containers:
+        - name: fastapi-container
+          image: img-2023mt03575
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          env:
+            - name: APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: config-2023mt03575
+                  key: APP_VERSION
+            - name: APP_TITLE
+              valueFrom:
+                configMapKeyRef:
+                  name: config-2023mt03575
+                  key: APP_TITLE
